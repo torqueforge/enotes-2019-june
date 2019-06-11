@@ -7,39 +7,61 @@ class Bottles {
 
   public function verses($starting, $ending) {
     $verses = [];
-    foreach (range($starting, $ending) as $i) {
-      $verses[] = $this->verse($i);
+    foreach (range($starting, $ending) as $number) {
+      $verses[] = $this->verse($number);
     }
 
     return implode("\n", $verses);
   }
 
   public function verse($number) {
-    switch ($number) {
-      case 0:
-        return
-          "No more bottles of beer on the wall, " .
-          "no more bottles of beer.\n" .
-          "Go to the store and buy some more, " .
-          "99 bottles of beer on the wall.\n";
-      case 1:
-        return
-          "1 bottle of beer on the wall, " .
-          "1 bottle of beer.\n" .
-          "Take it down and pass it around, " .
-          "no more bottles of beer on the wall.\n";
-      case 2:
-        return
-          "2 bottles of beer on the wall, " .
-          "2 bottles of beer.\n" .
-          "Take one down and pass it around, " .
-          "1 bottle of beer on the wall.\n";
-      default:
-        return
-          "{$number} bottles of beer on the wall, " .
-          "{$number} bottles of beer.\n" .
-          "Take one down and pass it around, " .
-          ($number - 1) . " bottles of beer on the wall.\n";
+    return
+      ucfirst($this->quantity($number)) .
+      " {$this->container($number)} of beer on the wall, " .
+      "{$this->quantity($number)} {$this->container($number)} of beer.\n" .
+      "{$this->action($number)}, " .
+      "{$this->quantity($this->successor($number))} " .
+      "{$this->container($this->successor($number))} " .
+      "of beer on the wall.\n";
+  }
+
+  public function quantity($number) {
+    if ($number === 0) {
+      return 'no more';
+    } else {
+      return (string)$number;
+    }
+  }
+
+  public function container($number) {
+    if ($number === 1) {
+      return "bottle";
+    } else {
+      return "bottles";
+    }
+  }
+
+  public function action($number) {
+    if ($number === 0) {
+      return 'Go to the store and buy some more';
+    } else {
+      return "Take {$this->pronoun($number)} down and pass it around";
+    }
+  }
+
+  public function pronoun($number) {
+    if ($number === 1) {
+      return 'it';
+    } else {
+      return 'one';
+    }
+  }
+
+  public function successor($number) {
+    if ($number === 0) {
+      return 99;
+    } else {
+      return $number - 1;
     }
   }
 }
