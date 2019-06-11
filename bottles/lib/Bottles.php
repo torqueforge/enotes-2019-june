@@ -23,33 +23,21 @@ class Bottles {
       "{$this->quantity($this->successor($number))} " .
       "{$this->container($this->successor($number))} " .
       "of beer on the wall.\n";
-    switch ($number) {
-      case 0:
-        return
-          ucfirst($this->quantity($number)) .
-          " {$this->container($number)} of beer on the wall, " .
-          "{$this->quantity($number)} {$this->container($number)} of beer.\n" .
-          "{$this->action($number)}, " .
-          "{$this->quantity($this->successor($number))} " .
-          "{$this->container($this->successor($number))} " .
-          "of beer on the wall.\n";
-      default:
-        return
-          ucfirst($this->quantity($number)) .
-          " {$this->container($number)} of beer on the wall, " .
-          "{$this->quantity($number)} {$this->container($number)} of beer.\n" .
-          "{$this->action($number)}, " .
-          "{$this->quantity($this->successor($number))} " .
-          "{$this->container($this->successor($number))} " .
-          "of beer on the wall.\n";
+  }
+
+  public function quantity($number) {
+    if ($number === 0) {
+      return 'no more';
+    } else {
+      return (string)$number;
     }
   }
 
-  public function successor($number) {
-    if ($number === 0) {
-      return 99;
+  public function container($number) {
+    if ($number === 1) {
+      return "bottle";
     } else {
-      return $number - 1;
+      return "bottles";
     }
   }
 
@@ -61,14 +49,6 @@ class Bottles {
     }
   }
 
-  public function quantity($number) {
-    if ($number === 0) {
-      return 'no more';
-    } else {
-      return (string)$number;
-    }
-  }
-
   public function pronoun($number) {
     if ($number === 1) {
       return 'it';
@@ -77,11 +57,11 @@ class Bottles {
     }
   }
 
-  public function container($number) {
-    if ($number === 1) {
-      return "bottle";
+  public function successor($number) {
+    if ($number === 0) {
+      return 99;
     } else {
-      return "bottles";
+      return $number - 1;
     }
   }
 }
