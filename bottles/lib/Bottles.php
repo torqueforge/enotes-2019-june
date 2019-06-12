@@ -15,8 +15,8 @@ class Bottles {
   }
 
   public function verse($number) {
-    $bottleNumber = self::bottleNumberFor($number);
-    $nextBottleNumber = self::bottleNumberFor($bottleNumber->successor());
+    $bottleNumber = $this->bottleNumberFor($number);
+    $nextBottleNumber = $this->bottleNumberFor($bottleNumber->successor());
 
     return
       ucfirst("$bottleNumber of beer on the wall, ") .
@@ -25,7 +25,7 @@ class Bottles {
       "{$nextBottleNumber} of beer on the wall.\n";
   }
 
-  public static function bottleNumberFor($number) {
+  public function bottleNumberFor($number) {
     switch ($number) {
       case 0:
         $className = BottleNumber0::class;
