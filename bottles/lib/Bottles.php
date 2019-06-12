@@ -68,7 +68,7 @@ class BottleNumber {
   }
 
   public function successor() {
-    return static::for($this->number - 1);
+    return static::for($this->number - 1); // depends on inheritance
   }
 }
 
@@ -82,7 +82,7 @@ class BottleNumber0 extends BottleNumber {
   }
 
   public function successor() {
-    return static::for(99);
+    return BottleNumber::for(99);         // depends on the constant BottleNumber
   }
 }
 
