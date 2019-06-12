@@ -15,53 +15,84 @@ class Bottles {
   }
 
   public function verse($number) {
+    $bottleNumber = self::bottleNumberFor($number);
+    $nextBottleNumber = self::bottleNumberFor($bottleNumber->successor());
+
     return
-      ucfirst($this->quantity($number)) .
-      " {$this->container($number)} of beer on the wall, " .
-      "{$this->quantity($number)} {$this->container($number)} of beer.\n" .
-      "{$this->action($number)}, " .
-      "{$this->quantity($this->successor($number))} " .
-      "{$this->container($this->successor($number))} " .
-      "of beer on the wall.\n";
+      ucfirst("$bottleNumber of beer on the wall, ") .
+      "{$bottleNumber} of beer.\n" .
+      "{$bottleNumber->action()}, " .
+      "{$nextBottleNumber} of beer on the wall.\n";
   }
 
-  public function quantity($number) {
-    if ($number === 0) {
-      return 'no more';
-    } else {
-      return (string)$number;
+  public static function bottleNumberFor($number) {
+    switch ($number) {
+      case 0:
+        $className = BottleNumber0::class;
+        break;
+      case 1:
+        $className = BottleNumber1::class;
+        break;
+      default:
+        $className = BottleNumber::class;
+        break;
     }
+    return new $className($number);
+  }
+}
+
+class BottleNumber {
+  protected $number;
+
+  public function __construct($number) {
+    $this->number = $number;
   }
 
-  public function container($number) {
-    if ($number === 1) {
-      return "bottle";
-    } else {
-      return "bottles";
-    }
+  public function __toString() {
+    return $this->quantity() . ' ' . $this->container();
   }
 
-  public function action($number) {
-    if ($number === 0) {
-      return 'Go to the store and buy some more';
-    } else {
-      return "Take {$this->pronoun($number)} down and pass it around";
-    }
+  public function container() {
+    return "bottles";
   }
 
-  public function pronoun($number) {
-    if ($number === 1) {
-      return 'it';
-    } else {
-      return 'one';
-    }
+  public function quantity() {
+    return (string)$this->number;
   }
 
-  public function successor($number) {
-    if ($number === 0) {
-      return 99;
-    } else {
-      return $number - 1;
-    }
+  public function action() {
+    return "Take {$this->pronoun()} down and pass it around";
+  }
+
+  public function pronoun() {
+    return 'one';
+  }
+
+  public function successor() {
+    return $this->number - 1;
+  }
+}
+
+class BottleNumber0 extends BottleNumber {
+  public function quantity() {
+    return 'no more';
+  }
+
+  public function action() {
+    return 'Go to the store and buy some more';
+  }
+
+  public function successor() {
+    return 99;
+  }
+}
+
+class BottleNumber1 extends BottleNumber {
+  public function container() {
+    return "bottle";
+  }
+
+  public function pronoun() {
+    return 'it';
   }
 }
