@@ -18,7 +18,7 @@ const HOUSE_PHRASES =
 class Phrases {
   protected $data;
 
-  public function __construct($ordererClass = UnchangedOrderer::class, $input = HOUSE_PHRASES) {
+  public function __construct($input = HOUSE_PHRASES, $ordererClass = UnchangedOrderer::class) {
     $this->data = (new $ordererClass)->order($input);
   }
 
@@ -146,5 +146,5 @@ class MundanePrefixer {
 
 
 print "\n";
-$phrases = new Phrases(MixedColumnOrderer::class, HOUSE_PHRASES);
+$phrases = new Phrases(HOUSE_PHRASES, MixedColumnOrderer::class);
 print(new House($phrases))->line(12);
