@@ -1,7 +1,6 @@
 <?php
 
 class House {
-
   protected $data;
 
   const LIST =
@@ -36,7 +35,7 @@ class House {
     return implode("\n", $lines);
   }
 
-  public function phrase($number=2) {
+  public function phrase($number) {
     return implode(' ' ,(array_slice($this->data(), 0-$number, $number, true)));
   }
 
@@ -48,4 +47,3 @@ class House {
     return "This is";
   }
 }
-
