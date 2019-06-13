@@ -19,12 +19,17 @@ class House {
       "the malt that lay in",
       "the house that Jack built");
 
-  public function __construct(
-      $ordererClass = UnchangedOrderer::class,
-      $prefixerClass = MundanePrefixer::Class) {
+  public function __construct($orderer = null, $prefixer = null)
+  {
+      if (!$orderer) {
+          $orderer = new UnchangedOrderer();
+      }
+      if (!$prefixer) {
+          $prefixer = new MundanePrefixer();
+      }
 
-    $this->data = (new $ordererClass)->order(self::LIST);
-    $this->prefixer = (new $prefixerClass);
+    $this->data = $orderer->order(self::LIST);
+    $this->prefixer = $prefixer;
   }
 
   public function data() {
@@ -88,12 +93,12 @@ class MundanePrefixer {
 
 
 print "\n";
-print (new House(RandomOrderer::class))->line(12);
+print (new House(new RandomOrderer()))->line(12);
 
 
 print "\n";
-print (new House(UnchangedOrderer::class, PiratePrefixer::class))->line(12);
+print (new House(new UnchangedOrderer(), new PiratePrefixer()))->line(12);
 
 
 print "\n";
-print (new House(RandomOrderer::class, PiratePrefixer::class))->line(12);
+print (new House(new RandomOrderer(), new PiratePrefixer()))->line(12);
