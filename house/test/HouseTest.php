@@ -5,21 +5,27 @@ srand(1);
 
 class AllTests extends \PHPUnit\Framework\TestCase {
   public function test_unchanged_orderer() {
-      $data = array("a", "b", "c", "d");
+      $data     = array("a", "b", "c", "d");
       $expected = $data;
       $this->assertEquals($expected, (new UnchangedOrderer())->order($data));
   }
 
   public function test_random_orderer() {
-    $data = array("a", "b", "c", "d");
+    $data     = array("a", "b", "c", "d");
     $expected = array("d", "a", "c", "b");
     $this->assertEquals($expected, (new RandomOrderer())->order($data));
   }
 
   public function test_mostly_random_orderer() {
-    $data = array("a", "b", "c", "d", "e", "always_last");
+    $data     = array("a", "b", "c", "d", "e", "always_last");
     $expected = array("a", "c", "b", "e", "d", "always_last");
     $this->assertEquals($expected, (new MostlyRandomOrderer())->order($data));
+  }
+
+  public function test_mixed_column_orderer() {
+    $data     = array(["a1", "a2"], ["b1", "b2"], ["c1", "c2"], ["d1", "d2"], ["e1", "e2"]);
+    $expected = array(["e1", "d2"], ["c1", "b2"], ["a1", "c2"], ["d1", "a2"], ["b1", "e2"]);
+    $this->assertEquals($expected, (new MixedColumnOrderer())->order($data));
   }
 
   public function test_line_1() {

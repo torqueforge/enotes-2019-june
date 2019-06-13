@@ -102,6 +102,14 @@ class MostlyRandomOrderer {
   }
 }
 
+class MixedColumnOrderer {
+  public function order($data) {
+    $columns = array_map(null, ...$data);
+    foreach ($columns as &$column) { shuffle($column); }
+    return array_map(null, ...$columns);
+  }
+}
+
 
 ////////
 class PiratePrefixer {
