@@ -10,7 +10,7 @@ class House {
     return implode("\n", $lines);
   }
 
-  public function phrase($number=2) {
+  public function phrase($number) {
     $phrases =
       array(
         "the horse and the hound and the horn that belonged to ",
