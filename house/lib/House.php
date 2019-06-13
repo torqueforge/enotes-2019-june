@@ -39,13 +39,15 @@ class House {
 }
 
 class RandomHouse extends House {
+  protected $shuffledList;
+
   public function data() {
-    static $randomized = null;
-    if(is_null($randomized)) {
-        $randomized = (parent::data());
-        shuffle($randomized);
+    if (!$this->shuffledList) {
+        $data = parent::data();
+        shuffle($data);
+        $this->shuffledList = $data;
     }
-    return $randomized;
+    return $this->shuffledList;
   }
 }
 
