@@ -48,6 +48,16 @@ class AllTests extends \PHPUnit\Framework\TestCase {
     $this->assertEquals($expected, (new Phrases($input))->phrase(2));
   }
 
+  public function test_phrases_handles_2d_list_containing_nulls() {
+    $input    = array(  ["phrase a1", "phrase a2", "phrase a3"],
+                        ["phrase b1", NULL, "phrase b2"],
+                        [NULL, "phrase c2", "phrase c3"],
+                        ["phrase d1", "phrase d2", NULL],
+                        ["phrase e1", "phrase e2", "phrase e3"]);
+    $expected = "phrase c2 phrase c3 phrase d1 phrase d2 phrase e1 phrase e2 phrase e3";
+    $this->assertEquals($expected, (new Phrases($input))->phrase(3));
+  }
+
   // Should you delete this test?  Discuss!
   public function test_phrases_handles_2d_list_with_mixed_column_orderer() {
     $input    = array(  ["phrase a1", "phrase a2"],

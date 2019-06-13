@@ -2,18 +2,18 @@
 
 const HOUSE_PHRASES =
   array(
-    ["the horse and the hound and the horn", "that belonged to"],
-    ["the farmer sowing his corn", "that kept"],
-    ["the rooster that crowed in the morn", "that woke"],
-    ["the priest all shaven and shorn", "that married"],
-    ["the man all tattered and torn", "that kissed"],
-    ["the maiden all forlorn", "that milked"],
-    ["the cow with the crumpled horn", "that tossed"],
-    ["the dog", "that worried"],
-    ["the cat", "that killed"],
-    ["the rat", "that ate"],
-    ["the malt", "that lay in"],
-    ["the house", "that Jack built"]);
+    ["the horse and the hound and the horn", NULL, "that belonged to"],
+    ["the farmer", "sowing his corn", "that kept"],
+    ["the rooster", "that crowed in the morn", "that woke"],
+    ["the priest", "all shaven and shorn", "that married"],
+    ["the man", "all tattered and torn", "that kissed"],
+    ["the maiden", "all forlorn", "that milked"],
+    ["the cow", "with the crumpled horn", "that tossed"],
+    ["the dog", NULL, "that worried"],
+    ["the cat", NULL, "that killed"],
+    ["the rat", NULL, "that ate"],
+    ["the malt", NULL, "that lay in"],
+    ["the house", NULL, "that Jack built"]);
 
 class Phrases {
   protected $data;
@@ -28,7 +28,8 @@ class Phrases {
 
   public function phrase($number) {
     $flattened = $this->flatten(array_slice($this->data(), 0-$number, $number, true));
-    return implode(' ' , $flattened);
+
+    return implode(' ' , array_filter($flattened));
   }
 
   public function length() {
