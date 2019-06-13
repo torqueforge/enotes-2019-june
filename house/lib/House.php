@@ -18,8 +18,8 @@ class Phrases {
       "the malt that lay in",
       "the house that Jack built");
 
-  public function __construct($ordererClass = UnchangedOrderer::class) {
-    $this->data = (new $ordererClass)->order(self::LIST);
+  public function __construct($ordererClass = UnchangedOrderer::class, $input = self::LIST) {
+    $this->data = (new $ordererClass)->order($input);
   }
 
   public function data() {
