@@ -61,10 +61,10 @@ class House {
   protected $prefixer;
 
   public function __construct(
-      $phrases,
+      $phrases = null,
       $prefixerClass = MundanePrefixer::Class) {
 
-    $this->phrases = $phrases;
+    $this->phrases = ($phrases) ?: new Phrases;
     $this->prefixer = (new $prefixerClass);
   }
 
