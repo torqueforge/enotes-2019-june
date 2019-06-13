@@ -57,7 +57,7 @@ class Phrases {
 }
 
 
-class House {
+class CumulativeTale {
   protected $phrases;
   protected $prefixer;
 
@@ -148,4 +148,4 @@ class MundanePrefixer {
 
 print "\n";
 $phrases = new Phrases(HOUSE_PHRASES, MixedColumnOrderer::class);
-print(new House($phrases))->line(12);
+print(new CumulativeTale($phrases))->line(12);

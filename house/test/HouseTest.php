@@ -74,7 +74,7 @@ class AllTests extends \PHPUnit\Framework\TestCase {
   public function test_line() {
     $input    = array("phrase a", "phrase b", "phrase c", "phrase d", "phrase e");
     $expected = "This is phrase c phrase d phrase e.\n";
-    $this->assertEquals($expected, (new House(new Phrases($input)))->line(3));
+    $this->assertEquals($expected, (new CumulativeTale(new Phrases($input)))->line(3));
   }
 
   public function test_recite() {
@@ -93,6 +93,6 @@ This is phrase b phrase c phrase d phrase e.
 This is phrase a phrase b phrase c phrase d phrase e.
 
 TALE;
-    $this->assertEquals($expected, (new House(new Phrases($input)))->recite());
+    $this->assertEquals($expected, (new CumulativeTale(new Phrases($input)))->recite());
   }
 }
