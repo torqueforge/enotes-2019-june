@@ -72,6 +72,15 @@ class UnchangedOrderer {
   }
 }
 
+class MostlyRandomOrderer {
+  public function order($data) {
+    $last = array_pop($data);
+    shuffle($data);
+    array_push($data, $last);
+    return $data;
+  }
+}
+
 
 ////////
 class PiratePrefixer {
@@ -90,10 +99,11 @@ class MundanePrefixer {
 print "\n";
 print (new House(RandomOrderer::class))->line(12);
 
-
 print "\n";
 print (new House(UnchangedOrderer::class, PiratePrefixer::class))->line(12);
 
-
 print "\n";
 print (new House(RandomOrderer::class, PiratePrefixer::class))->line(12);
+
+print "\n";
+print (new House(MostlyRandomOrderer::class))->line(12);
