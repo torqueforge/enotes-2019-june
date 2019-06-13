@@ -29,42 +29,24 @@ class Phrases {
   public function phrase($number) {
     return implode(' ' ,(array_slice($this->data(), 0-$number, $number, true)));
   }
+
+  public function length() {
+    return count($this->data());
+  }
 }
 
 
 class House {
-  // protected $data;
   protected $phrases;
   protected $prefixer;
 
-  // const LIST =
-  //   array(
-  //     "the horse and the hound and the horn that belonged to",
-  //     "the farmer sowing his corn that kept",
-  //     "the rooster that crowed in the morn that woke",
-  //     "the priest all shaven and shorn that married",
-  //     "the man all tattered and torn that kissed",
-  //     "the maiden all forlorn that milked",
-  //     "the cow with the crumpled horn that tossed",
-  //     "the dog that worried",
-  //     "the cat that killed",
-  //     "the rat that ate",
-  //     "the malt that lay in",
-  //     "the house that Jack built");
-
   public function __construct(
-      // $ordererClass  = UnchangedOrderer::class,
       $prefixerClass = MundanePrefixer::Class,
       $phrasesClass  = Phrases::class) {
 
-    // $this->data = (new $ordererClass)->order(self::LIST);
     $this->phrases = (new $phrasesClass);
     $this->prefixer = (new $prefixerClass);
   }
-
-  // public function data() {
-  //   return $this->data;
-  // }
 
   public function phrases() {
     return $this->phrases;
@@ -76,7 +58,7 @@ class House {
 
   public function recite() {
     $lines = [];
-    foreach (range(1, 12) as $number) {
+    foreach (range(1, $this->phrases()->length()) as $number) {
       $lines[] = $this->line($number);
     }
 
@@ -135,14 +117,7 @@ class MundanePrefixer {
 }
 
 
-// print "\n";
-// print (new House(RandomOrderer::class))->line(12);
-
-// print "\n";
-// print (new House(UnchangedOrderer::class, PiratePrefixer::class))->line(12);
-
-// print "\n";
-// print (new House(RandomOrderer::class, PiratePrefixer::class))->line(12);
-
-// print "\n";
-// print (new House(MostlyRandomOrderer::class))->line(12);
+print "\n";
+print(
+   new House(MundanePrefixer::class,
+  (new Phrases(MostlyRandomOrderer::class))))->line(12);
