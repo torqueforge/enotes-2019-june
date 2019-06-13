@@ -1,7 +1,9 @@
 <?php
 
-class House {
-  public function recite() {
+class House
+{
+  public function recite()
+  {
     $lines = [];
     foreach (range(1, 12) as $number) {
       $lines[] = $this->line($number);
@@ -10,7 +12,8 @@ class House {
     return implode("\n", $lines);
   }
 
-  public function phrase($number) {
+  public function phrase($number)
+  {
     $phrases =
       array(
         "the horse and the hound and the horn that belonged to ",
@@ -26,10 +29,11 @@ class House {
         "the malt that lay in ",
         "");
 
-    return implode('' ,(array_slice($phrases, 0-$number, $number, true)));
+    return implode('' ,(array_slice($phrases, -$number, $number, true)));
   }
 
-  public function line($number) {
+  public function line($number)
+  {
     return "This is {$this->phrase($number)}the house that Jack built.\n";
   }
 }
