@@ -1,19 +1,19 @@
 <?php
 
 const HOUSE_PHRASES =
-array(
-  "the horse and the hound and the horn that belonged to",
-  "the farmer sowing his corn that kept",
-  "the rooster that crowed in the morn that woke",
-  "the priest all shaven and shorn that married",
-  "the man all tattered and torn that kissed",
-  "the maiden all forlorn that milked",
-  "the cow with the crumpled horn that tossed",
-  "the dog that worried",
-  "the cat that killed",
-  "the rat that ate",
-  "the malt that lay in",
-  "the house that Jack built");
+  array(
+    ["the horse and the hound and the horn", "that belonged to"],
+    ["the farmer sowing his corn", "that kept"],
+    ["the rooster that crowed in the morn", "that woke"],
+    ["the priest all shaven and shorn", "that married"],
+    ["the man all tattered and torn", "that kissed"],
+    ["the maiden all forlorn", "that milked"],
+    ["the cow with the crumpled horn", "that tossed"],
+    ["the dog", "that worried"],
+    ["the cat", "that killed"],
+    ["the rat", "that ate"],
+    ["the malt", "that lay in"],
+    ["the house", "that Jack built"]);
 
 class Phrases {
   protected $data;
@@ -27,11 +27,31 @@ class Phrases {
   }
 
   public function phrase($number) {
-    return implode(' ' ,(array_slice($this->data(), 0-$number, $number, true)));
+    $flattened = $this->flatten(array_slice($this->data(), 0-$number, $number, true));
+    return implode(' ' , $flattened);
   }
 
   public function length() {
     return count($this->data());
+  }
+
+  // This makes me cry
+  public function flatten($array = null) {
+    $result = array();
+
+    if (!is_array($array)) {
+        $array = func_get_args();
+    }
+
+    foreach ($array as $key => $value) {
+        if (is_array($value)) {
+            $result = array_merge($result, $this->flatten($value));
+        } else {
+            $result = array_merge($result, array($key => $value));
+        }
+    }
+
+    return $result;
   }
 }
 
@@ -41,10 +61,10 @@ class House {
   protected $prefixer;
 
   public function __construct(
-      $prefixerClass = MundanePrefixer::Class,
-      $phrasesClass  = Phrases::class) {
+      $phrases,
+      $prefixerClass = MundanePrefixer::Class) {
 
-    $this->phrases = (new $phrasesClass);
+    $this->phrases = $phrases;
     $this->prefixer = (new $prefixerClass);
   }
 
@@ -126,6 +146,5 @@ class MundanePrefixer {
 
 
 print "\n";
-print(
-   new House(MundanePrefixer::class,
-  (new Phrases(MostlyRandomOrderer::class))))->line(12);
+$phrases = new Phrases(MixedColumnOrderer::class, HOUSE_PHRASES);
+print(new House($phrases))->line(12);
