@@ -1,8 +1,9 @@
 <?php
 
-class House {
+class House
+{
   const LIST =
-    array(
+    [
       "the horse and the hound and the horn that belonged to",
       "the farmer sowing his corn that kept",
       "the rooster that crowed in the morn that woke",
@@ -14,9 +15,11 @@ class House {
       "the cat that killed",
       "the rat that ate",
       "the malt that lay in",
-      "the house that Jack built");
+      "the house that Jack built",
+    ];
 
-  public function recite() {
+  public function recite()
+  {
     $lines = [];
     foreach (range(1, 12) as $number) {
       $lines[] = $this->line($number);
@@ -25,32 +28,38 @@ class House {
     return implode("\n", $lines);
   }
 
-  public function phrase($number) {
+  public function phrase($number)
+  {
     return implode(' ' ,(array_slice($this->data(), 0-$number, $number, true)));
   }
 
-  public function line($number) {
+  public function line($number)
+  {
     return "{$this->prefix()} {$this->phrase($number)}.\n";
   }
 
-  public function prefix() {
+  public function prefix()
+  {
     return "This is";
   }
 
-  public function data() {
+  public function data()
+  {
     return self::LIST;
   }
 }
 
 ///////////
 class RandomHouse extends House {
+  protected $shuffledList;
+
   public function data() {
-    static $randomized = null;
-    if(is_null($randomized)) {
-        $randomized = (parent::data());
-        shuffle($randomized);
+    if (!$this->shuffledList) {
+        $data = parent::data();
+        shuffle($data);
+        $this->shuffledList = $data;
     }
-    return $randomized;
+    return $this->shuffledList;
   }
 }
 
