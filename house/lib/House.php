@@ -1,6 +1,7 @@
 <?php
 
-class House {
+class House
+{
   const LIST =
     array(
       "the horse and the hound and the horn that belonged to",
@@ -16,7 +17,8 @@ class House {
       "the malt that lay in",
       "the house that Jack built");
 
-  public function recite() {
+  public function recite()
+  {
     $lines = [];
     foreach (range(1, 12) as $number) {
       $lines[] = $this->line($number);
@@ -25,15 +27,18 @@ class House {
     return implode("\n", $lines);
   }
 
-  public function phrase($number) {
+  public function phrase($number)
+  {
     return implode(' ' ,(array_slice($this->data(), 0-$number, $number, true)));
   }
 
-  public function line($number) {
+  public function line($number)
+  {
     return "This is {$this->phrase($number)}.\n";
   }
 
-  public function data() {
+  public function data()
+  {
     return self::LIST;
   }
 }
