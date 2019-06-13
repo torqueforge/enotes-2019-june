@@ -1,8 +1,27 @@
 <?php
 
 require __DIR__ . "/../lib/House.php";
+srand(1);
 
-class HouseTest extends \PHPUnit\Framework\TestCase {
+class AllTests extends \PHPUnit\Framework\TestCase {
+  public function test_unchanged_orderer() {
+      $data = array("a", "b", "c", "d");
+      $expected = $data;
+      $this->assertEquals($expected, (new UnchangedOrderer())->order($data));
+  }
+
+  public function test_random_orderer() {
+    $data = array("a", "b", "c", "d");
+    $expected = array("d", "a", "c", "b");
+    $this->assertEquals($expected, (new RandomOrderer())->order($data));
+  }
+
+  public function test_mostly_random_orderer() {
+    $data = array("a", "b", "c", "d", "e", "always_last");
+    $expected = array("a", "c", "b", "e", "d", "always_last");
+    $this->assertEquals($expected, (new MostlyRandomOrderer())->order($data));
+  }
+
   public function test_line_1() {
     $expected = "This is the house that Jack built.\n";
     $this->assertEquals($expected, (new House())->line(1));
